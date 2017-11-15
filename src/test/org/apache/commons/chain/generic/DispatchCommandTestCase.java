@@ -85,9 +85,9 @@ public class DispatchCommandTestCase extends TestCase {
 
     }
 
-    
+
     class TestCommand extends DispatchCommand {
-        
+
 
         public boolean testMethod(Context context) {
             context.put("foo", "foo");
@@ -95,7 +95,7 @@ public class DispatchCommandTestCase extends TestCase {
         }
 
         public boolean testMethodKey(Context context) {
-            
+
             context.put("bar", "bar");
             return false;
         }
@@ -122,13 +122,13 @@ public class DispatchCommandTestCase extends TestCase {
             context.put("elephant", "elephant");
             return true;
         }
-        
+
     }
 
 
-    class TestAlternateContext extends java.util.HashMap implements Context {
+    class TestAlternateContext extends java.util.HashMap<String,Object> implements Context {
         Context wrappedContext = null;
-         TestAlternateContext(Context context) {
+        TestAlternateContext(Context context) {
             this.wrappedContext = context;
         }
 
@@ -136,7 +136,7 @@ public class DispatchCommandTestCase extends TestCase {
             return this.wrappedContext.get(o);
         }
 
-        public Object put(Object key, Object value) {
+        public Object put(String key, Object value) {
             return this.wrappedContext.put(key, value);
         }
 

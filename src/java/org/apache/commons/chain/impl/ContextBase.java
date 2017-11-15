@@ -50,7 +50,7 @@ import org.apache.commons.chain.Context;
  * @version $Revision$ $Date$
  */
 
-public class ContextBase extends HashMap implements Context {
+public class ContextBase extends HashMap<String,Object> implements Context {
 
 
     // ------------------------------------------------------------ Constructors
@@ -123,10 +123,10 @@ public class ContextBase extends HashMap implements Context {
     static {
 
         singleton = new Serializable() {
-                public boolean equals(Object object) {
-                    return (false);
-                }
-            };
+            public boolean equals(Object object) {
+                return (false);
+            }
+        };
 
     }
 
@@ -247,7 +247,7 @@ public class ContextBase extends HashMap implements Context {
         // Case 2 -- this is a local property
         if (key != null) {
             PropertyDescriptor descriptor =
-                (PropertyDescriptor) descriptors.get(key);
+                    (PropertyDescriptor) descriptors.get(key);
             if (descriptor != null) {
                 if (descriptor.getReadMethod() != null) {
                     return (readProperty(descriptor));
@@ -315,7 +315,7 @@ public class ContextBase extends HashMap implements Context {
      * @exception UnsupportedOperationException if this local property does not
      *  have both a read method and a write method
      */
-    public Object put(Object key, Object value) {
+    public Object put(String key, Object value) {
 
         // Case 1 -- no local properties
         if (descriptors == null) {
@@ -325,7 +325,7 @@ public class ContextBase extends HashMap implements Context {
         // Case 2 -- this is a local property
         if (key != null) {
             PropertyDescriptor descriptor =
-                (PropertyDescriptor) descriptors.get(key);
+                    (PropertyDescriptor) descriptors.get(key);
             if (descriptor != null) {
                 Object previous = null;
                 if (descriptor.getReadMethod() != null) {
@@ -357,9 +357,9 @@ public class ContextBase extends HashMap implements Context {
      */
     public void putAll(Map map) {
 
-        Iterator pairs = map.entrySet().iterator();
+        Iterator<Map.Entry<String,Object>> pairs = map.entrySet().iterator();
         while (pairs.hasNext()) {
-            Map.Entry pair = (Map.Entry) pairs.next();
+            Map.Entry<String,Object> pair =  pairs.next();
             put(pair.getKey(), pair.getValue());
         }
 
@@ -387,10 +387,10 @@ public class ContextBase extends HashMap implements Context {
         // Case 2 -- this is a local property
         if (key != null) {
             PropertyDescriptor descriptor =
-                (PropertyDescriptor) descriptors.get(key);
+                    (PropertyDescriptor) descriptors.get(key);
             if (descriptor != null) {
                 throw new UnsupportedOperationException
-                    ("Local property '" + key + "' cannot be removed");
+                        ("Local property '" + key + "' cannot be removed");
             }
         }
 
@@ -436,7 +436,7 @@ public class ContextBase extends HashMap implements Context {
      *
      * @param key Attribute key or property name
      */
-    private Map.Entry entry(Object key) {
+    private Map.Entry entry(String key) {
 
         if (containsKey(key)) {
             return (new MapEntryImpl(key, get(key)));
@@ -463,7 +463,7 @@ public class ContextBase extends HashMap implements Context {
         // Retrieve the set of property descriptors for this Context class
         try {
             pd = Introspector.getBeanInfo
-                (getClass()).getPropertyDescriptors();
+                    (getClass()).getPropertyDescriptors();
         } catch (IntrospectionException e) {
             pd = new PropertyDescriptor[0]; // Should never happen
         }
@@ -502,14 +502,14 @@ public class ContextBase extends HashMap implements Context {
             Method method = descriptor.getReadMethod();
             if (method == null) {
                 throw new UnsupportedOperationException
-                    ("Property '" + descriptor.getName()
-                     + "' is not readable");
+                        ("Property '" + descriptor.getName()
+                                + "' is not readable");
             }
             return (method.invoke(this, zeroParams));
         } catch (Exception e) {
             throw new UnsupportedOperationException
-                ("Exception reading property '" + descriptor.getName()
-                 + "': " + e.getMessage());
+                    ("Exception reading property '" + descriptor.getName()
+                            + "': " + e.getMessage());
         }
 
     }
@@ -525,7 +525,7 @@ public class ContextBase extends HashMap implements Context {
      * @exception UnsupportedOperationException if the specified key
      *  identifies a property instead of an attribute
      */
-    private boolean remove(Map.Entry entry) {
+    private boolean remove(Map.Entry<String,Object> entry) {
 
         Map.Entry actual = entry(entry.getKey());
         if (actual == null) {
@@ -570,14 +570,14 @@ public class ContextBase extends HashMap implements Context {
             Method method = descriptor.getWriteMethod();
             if (method == null) {
                 throw new UnsupportedOperationException
-                    ("Property '" + descriptor.getName()
-                     + "' is not writeable");
+                        ("Property '" + descriptor.getName()
+                                + "' is not writeable");
             }
-            method.invoke(this, new Object[] {value});
+            method.invoke(this, value);
         } catch (Exception e) {
             throw new UnsupportedOperationException
-                ("Exception writing property '" + descriptor.getName()
-                 + "': " + e.getMessage());
+                    ("Exception writing property '" + descriptor.getName()
+                            + "': " + e.getMessage());
         }
 
     }
@@ -600,7 +600,7 @@ public class ContextBase extends HashMap implements Context {
             if (!(obj instanceof Map.Entry)) {
                 return (false);
             }
-            Map.Entry entry = (Map.Entry) obj;
+            Map.Entry<String,Object> entry = (Map.Entry) obj;
             Entry actual = ContextBase.this.entry(entry.getKey());
             if (actual != null) {
                 return (actual.equals(entry));
@@ -639,7 +639,7 @@ public class ContextBase extends HashMap implements Context {
     private class EntrySetIterator implements Iterator {
 
         private Map.Entry entry = null;
-        private Iterator keys = ContextBase.this.keySet().iterator();
+        private Iterator<String> keys = ContextBase.this.keySet().iterator();
 
         public boolean hasNext() {
             return (keys.hasNext());
@@ -663,12 +663,12 @@ public class ContextBase extends HashMap implements Context {
      */
     private class MapEntryImpl implements Map.Entry {
 
-        MapEntryImpl(Object key, Object value) {
+        MapEntryImpl(String key, Object value) {
             this.key = key;
             this.value = value;
         }
 
-        private Object key;
+        private String key;
         private Object value;
 
         public boolean equals(Object obj) {
@@ -702,7 +702,7 @@ public class ContextBase extends HashMap implements Context {
 
         public int hashCode() {
             return (((key == null) ? 0 : key.hashCode())
-                   ^ ((value == null) ? 0 : value.hashCode()));
+                    ^ ((value == null) ? 0 : value.hashCode()));
         }
 
         public Object setValue(Object value) {
@@ -766,7 +766,7 @@ public class ContextBase extends HashMap implements Context {
     private class ValuesIterator implements Iterator {
 
         private Map.Entry entry = null;
-        private Iterator keys = ContextBase.this.keySet().iterator();
+        private Iterator<String> keys = ContextBase.this.keySet().iterator();
 
         public boolean hasNext() {
             return (keys.hasNext());

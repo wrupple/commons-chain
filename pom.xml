@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>commons-chain</groupId>
     <artifactId>commons-chain</artifactId>
-    <version>1.2</version>
+    <version>1.2-scala</version>
     <name>Commons Chain</name>
     <description>
         An implementation of the GoF Chain of Responsibility pattern
@@ -83,10 +83,10 @@
     </scm>
 
     <properties>
-        <maven.compile.source>1.3</maven.compile.source>
-        <maven.compile.target>1.3</maven.compile.target>
+        <maven.compile.source>1.7</maven.compile.source>
+        <maven.compile.target>1.7</maven.compile.target>
         <commons.componentid>chain</commons.componentid>
-        <commons.release.version>1.2</commons.release.version>
+        <commons.release.version>1.2-scala</commons.release.version>
         <commons.jira.id>CHAIN</commons.jira.id>
         <commons.jira.pid>12310462</commons.jira.pid>
         <commons.osgi.import>!javax.portlet,*</commons.osgi.import>
@@ -256,7 +256,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>1.2</version>
+                <version>1.2-scala</version>
                 <configuration>
                     <threshold>Normal</threshold>
                     <effort>Default</effort>
