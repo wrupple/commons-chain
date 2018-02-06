@@ -77,7 +77,7 @@ package org.apache.commons.chain;
  * @version $Revision$ $Date$
  */
 
-public interface Command {
+public interface Command<T extends Context> {
 
     /**
      * <p>Commands should return <code>CONTINUE_PROCESSING</code> if the processing
@@ -116,7 +116,7 @@ public interface Command {
      *  of this {@link Context} should be delegated to a subsequent
      *  {@link Command} in an enclosing {@link Chain}
      */
-    boolean execute(Context context) throws Exception;
+    boolean execute(T context) throws Exception;
 
 
 }

@@ -32,7 +32,7 @@ import org.apache.commons.chain.Filter;
  * @version $Revision$ $Date$
  */
 
-public class ChainBase implements Chain {
+public class ChainBase<T extends Context> implements Chain<T> {
 
 
     // ----------------------------------------------------------- Constructors
