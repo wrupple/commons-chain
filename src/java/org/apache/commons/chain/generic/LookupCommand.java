@@ -44,7 +44,7 @@ import org.apache.commons.chain.Filter;
  * @version $Revision$ $Date$
  */
 
-public class LookupCommand implements Filter {
+public class LookupCommand<T extends Context> implements Filter<T> {
 
 
     // -------------------------------------------------------------- Constructors

@@ -41,7 +41,7 @@ package org.apache.commons.chain;
  * @version $Revision$ $Date$
  */
 
-public interface Filter extends Command {
+public interface Filter<T extends Context> extends Command<T> {
 
 
     /**
