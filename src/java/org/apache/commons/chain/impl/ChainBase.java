@@ -24,6 +24,9 @@ import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * <p>Convenience base class for {@link Chain} implementations.</p>
@@ -34,6 +37,7 @@ import org.apache.commons.chain.Filter;
 
 public class ChainBase<T extends Context> implements Chain<T> {
 
+    private static final Logger log = LoggerFactory.getLogger(ChainBase.class);
 
     // ----------------------------------------------------------- Constructors
 
@@ -188,7 +192,10 @@ public class ChainBase<T extends Context> implements Chain<T> {
         int n = commands.length;
         for (i = 0; i < n; i++) {
             try {
+                log.debug("<{}>",commands[i].getClass().getSimpleName());
                 saveResult = commands[i].execute(context);
+                log.debug("</{}>",commands[i].getClass().getSimpleName());
+
                 if (saveResult) {
                     break;
                 }
