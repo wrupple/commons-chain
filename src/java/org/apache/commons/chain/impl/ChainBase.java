@@ -23,9 +23,8 @@ import org.apache.commons.chain.Chain;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -37,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 public class ChainBase<T extends Context> implements Chain<T> {
 
-    private static final Logger log = LoggerFactory.getLogger(ChainBase.class);
+    private static final Logger log = LogManager.getLogger(ChainBase.class);
 
     // ----------------------------------------------------------- Constructors
 
@@ -141,6 +140,7 @@ public class ChainBase<T extends Context> implements Chain<T> {
      *  is <code>null</code>
      * @exception IllegalStateException if no further configuration is allowed
      */
+    @Override
     public void addCommand(Command command) {
 
         if (command == null) {
@@ -174,7 +174,7 @@ public class ChainBase<T extends Context> implements Chain<T> {
      *  of this {@link Context} should be delegated to a subsequent
      *  {@link Command} in an enclosing {@link Chain}
      */
-    public boolean execute(Context context) throws Exception {
+    public boolean execute(T context) throws Exception {
 
         // Verify our parameters
         if (context == null) {
@@ -192,6 +192,7 @@ public class ChainBase<T extends Context> implements Chain<T> {
         int n = commands.length;
         for (i = 0; i < n; i++) {
             try {
+
                 log.debug("<{}>",commands[i].getClass().getSimpleName());
                 saveResult = commands[i].execute(context);
                 log.debug("</{}>",commands[i].getClass().getSimpleName());
