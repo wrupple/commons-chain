@@ -193,9 +193,9 @@ public class ChainBase<T extends Context> implements Chain<T> {
         for (i = 0; i < n; i++) {
             try {
 
-                log.debug("<{}>",commands[i].getClass().getSimpleName());
+                log.trace("<{}>",commands[i].getClass().getSimpleName());
                 saveResult = commands[i].execute(context);
-                log.debug("</{}>",commands[i].getClass().getSimpleName());
+                log.trace("</{}>",commands[i].getClass().getSimpleName());
 
                 if (saveResult) {
                     break;
