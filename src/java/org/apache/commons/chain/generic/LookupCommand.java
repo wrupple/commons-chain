@@ -22,6 +22,9 @@ import org.apache.commons.chain.CatalogFactory;
 import org.apache.commons.chain.Command;
 import org.apache.commons.chain.Context;
 import org.apache.commons.chain.Filter;
+import org.apache.commons.chain.impl.ChainBase;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -45,6 +48,7 @@ import org.apache.commons.chain.Filter;
  */
 
 public class LookupCommand<T extends Context> implements Filter<T> {
+    private static final Logger log = LogManager.getLogger(LookupCommand.class);
 
 
     // -------------------------------------------------------------- Constructors
@@ -412,6 +416,7 @@ public class LookupCommand<T extends Context> implements Filter<T> {
                          + "' in catalog '" + catalogName + "'");
                 }
             }
+            log.debug("{}->{}",name,command.getClass().getSimpleName());
             return (command);
         } else {
             throw new IllegalArgumentException("No command name");
