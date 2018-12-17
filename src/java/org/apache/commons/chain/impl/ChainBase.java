@@ -175,6 +175,9 @@ public class ChainBase<T extends Context> implements Chain<T> {
      *  {@link Command} in an enclosing {@link Chain}
      */
     public boolean execute(T context) throws Exception {
+        if(log.isDebugEnabled()){
+            log.debug("<{}>",getClass().getSimpleName());
+        }
 
         // Verify our parameters
         if (context == null) {
@@ -192,10 +195,13 @@ public class ChainBase<T extends Context> implements Chain<T> {
         int n = commands.length;
         for (i = 0; i < n; i++) {
             try {
-
-                log.trace("<{}>",commands[i].getClass().getSimpleName());
+                if(log.isTraceEnabled()){
+                    log.trace("    <{}>",commands[i].getClass().getSimpleName());
+                }
                 saveResult = commands[i].execute(context);
-                log.trace("</{}>",commands[i].getClass().getSimpleName());
+                if(log.isTraceEnabled()){
+                    log.trace("    </{}>",commands[i].getClass().getSimpleName());
+                }
 
                 if (saveResult) {
                     break;
@@ -226,7 +232,9 @@ public class ChainBase<T extends Context> implements Chain<T> {
                 }
             }
         }
-
+        if(log.isDebugEnabled() ){
+            log.debug("</{}>",getClass().getSimpleName());
+        }
         // Return the exception or result state from the last execute()
         if ((saveException != null) && !handled) {
             throw saveException;
