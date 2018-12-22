@@ -36,7 +36,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ChainBase<T extends Context> implements Chain<T> {
 
-    private static final Logger log = LogManager.getLogger(ChainBase.class);
+    protected static final Logger log = LogManager.getLogger(ChainBase.class);
 
     // ----------------------------------------------------------- Constructors
 
