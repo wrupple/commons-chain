@@ -175,7 +175,7 @@ public class ChainBase<T extends Context> implements Chain<T> {
      *  {@link Command} in an enclosing {@link Chain}
      */
     public boolean execute(T context) throws Exception {
-        if(log.isDebugEnabled()){
+        if(log.isDebugEnabled()&&!getClass().getSimpleName().isEmpty()){
             log.debug("<{}>",getClass().getSimpleName());
         }
 
@@ -232,7 +232,7 @@ public class ChainBase<T extends Context> implements Chain<T> {
                 }
             }
         }
-        if(log.isDebugEnabled() ){
+        if(log.isDebugEnabled()&&!getClass().getSimpleName().isEmpty()){
             log.debug("</{}>",getClass().getSimpleName());
         }
         // Return the exception or result state from the last execute()
