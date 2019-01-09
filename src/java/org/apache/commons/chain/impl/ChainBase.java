@@ -195,11 +195,11 @@ public class ChainBase<T extends Context> implements Chain<T> {
         int n = commands.length;
         for (i = 0; i < n; i++) {
             try {
-                if(log.isTraceEnabled()){
+                if(log.isTraceEnabled()&&!commands[i].getClass().getSimpleName().isEmpty()){
                     log.trace("    <{}>",commands[i].getClass().getSimpleName());
                 }
                 saveResult = commands[i].execute(context);
-                if(log.isTraceEnabled()){
+                if(log.isTraceEnabled()&&!commands[i].getClass().getSimpleName().isEmpty()){
                     log.trace("    </{}>",commands[i].getClass().getSimpleName());
                 }
 
