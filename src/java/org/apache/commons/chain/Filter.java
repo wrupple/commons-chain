@@ -62,7 +62,7 @@ public interface Filter<T extends Context> extends Command<T> {
      *  method (and therefore need not be rethrown), return <code>true</code>;
      *  otherwise return <code>false</code>
      */
-   boolean postprocess(Context context, Exception exception);
+   boolean postprocess(T context, Exception exception);
 
 
 }

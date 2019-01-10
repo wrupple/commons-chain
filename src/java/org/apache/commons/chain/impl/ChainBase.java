@@ -228,7 +228,7 @@ public class ChainBase<T extends Context> implements Chain<T> {
                         handled = true;
                     }
                 } catch (Exception e) {
-                      // Silently ignore
+                    log.error("Silenty ignoring error during post procesing",e);
                 }
             }
         }
